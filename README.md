@@ -28,7 +28,7 @@ adb shell chmod 0777 /data/local/tmp/heap_snap
 setprop libc.debug.malloc 1
 若为Android7.0及之后的版本，则还需设置：
 setprop libc.debug.malloc.options leak_track
-setprop libc.debug.malloc.program vendor/bin/test
+setprop libc.debug.malloc.program app_process
 然后再执行：stop;start
 [执行你的应用]
 ```
