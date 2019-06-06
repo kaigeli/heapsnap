@@ -27,10 +27,14 @@ adb shell chmod 0777 /data/local/tmp/heap_snap
 ```shell
 setprop libc.debug.malloc 1
 若为Android7.0及之后的版本，则还需设置：
-setprop libc.debug.malloc.options leak_track
-setprop libc.debug.malloc.program app_process
-然后再执行：stop;start
-[执行你的应用]
+setprop libc.debug.malloc.options leak_track   //注：有的平台将leak_track改为backtrace，没弄清为什么。
+setprop libc.debug.malloc.program app_process //注：app_process即服务名路径，如cameraserver，在system/bin/cameraserver这个位置，则要将app_process改为system/bin/cameraserver，
+即：setprop libc.debug.malloc.options leak_track
+    setprop libc.debug.malloc.program system/bin/cameraserver
+然后再执行：stop [你的应用];
+           start [你的应用]
+如：stop cameraserver
+    start cameraserver
 ```
 * 加载动态库
 ```
@@ -41,7 +45,7 @@ setprop libc.debug.malloc.program app_process
 * 多次在不同时间点获取目标进程的heap信息，并对这些heap信息进行比对，从而找出异常的内存分配
 * 也可以选择在加载动态库时直接执行动态库中的函数保存heap信息，然后马上关闭动态库．以后每次获取heap信息都需要调用相同的命令：
 ```
-/data/local/tmp/heapsnap -p <pid> -l /data/local/tmp/libheapsnap.so -o -f heapsnap_save
+/data/local/tmp/heapsnap -p <pid> -l /data/local/tmp/libheapsnap.so -o -f heapsnap_save //建议用这个，每次保存内存快照，只需要执行这一句即可
 ```
 获取到的heap信息保存在： /data/local/tmp/heap_snap/ 目录下
 对于已经加载库的进程，也可以这么调用获取heap信息．
