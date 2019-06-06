@@ -23,6 +23,7 @@ adb shell chmod 0755 /data/local/tmp/heapsnap
 adb shell mkdir -p /data/local/tmp/heap_snap
 adb shell chmod 0777 /data/local/tmp/heap_snap
 ```
+注：若为Android7.0以上版本，则需要将源码下载至sdk的CameraHal中进行编译后，再将生成的对应以上文件push到对应位置。
 * 通过adb或者串口登陆目标机器，开启malloc调试，并重启目标进程
 ```shell
 setprop libc.debug.malloc 1
