@@ -26,7 +26,10 @@ adb shell chmod 0777 /data/local/tmp/heap_snap
 * 通过adb或者串口登陆目标机器，开启malloc调试，并重启目标进程
 ```shell
 setprop libc.debug.malloc 1
-stop;start
+若为Android7.0及之后的版本，则还需设置：
+setprop libc.debug.malloc.options leak_track
+setprop libc.debug.malloc.program vendor/bin/test
+然后再执行：stop;start
 [执行你的应用]
 ```
 * 加载动态库
